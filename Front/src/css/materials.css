@@ -1,0 +1,10 @@
+.materials-container {
+  margin-top: 20px; /* Marge en haut de votre conteneur principal */
+  padding: 20px; /* Espacement interne */
+  background-color: #f0f0f0; /* Couleur de fond */
+}
+
+.pie-chart-container {
+  max-width: 600px; /* Largeur maximale du graphique */
+  margin: 0 auto; /* Centrage horizontal */
+}

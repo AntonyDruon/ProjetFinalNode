@@ -1,15 +1,38 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("Email:", email);
-    console.log("Password:", password);
+    try {
+      console.log("Tentative de connexion...");
+      const response = await fetch("http://localhost:8000/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+      console.log("Response:", response);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Data:", data);
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Erreur lors de la connexion :", error);
+    }
   };
 
   return (
@@ -19,7 +42,7 @@ const Login = () => {
         background: `url(https://img.freepik.com/photos-gratuite/fond-design-texture-bois-chene_53876-143033.jpg?size=626&ext=jpg&ga=GA1.1.212159940.1701541924&semt=ais_user)`,
         backgroundSize: "cover",
         backgroundPosition: "center",
-        minHeight: `calc(100vh - 56px)`, // 56px est la hauteur estimée de la navbar
+        minHeight: `calc(100vh - 56px)`,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
